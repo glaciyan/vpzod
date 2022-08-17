@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="Visual Paradigm Lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib01.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib02.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib03.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib04.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib05.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib06.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib07.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib09.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/jniwrap.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/vpplatform.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/openapi.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/winpack.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/ormlib/orm.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/../../../../../../../dev/lib/docs/vp-plugin-javadoc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib02.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../../../../Program Files/Visual Paradigm 16.3/lib/lib05.jar!/" />
+    </SOURCES>
+  </library>
+</component>

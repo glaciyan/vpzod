@@ -1,0 +1,23 @@
+<plugin
+        id="cc.glaciyan.vpzod"
+        name="Generate Flow of Events Report"
+        description="Generate an HTML report of use case flow of events."
+        provider="glaciyan"
+        class="cc.glaciyan.vpzod.VPZod">
+
+    <actionSets>
+        <actionSet id="cc.glaciyan.vpzod.actionset">
+            <menu id="cc.glaciyan.vpzod.menu1" label="glaciyan Tools" ribbonPath="Tools"/>
+            <action
+                    id="cc.glaciyan.vpzod.actions.GenerateZodSchema"
+                    actionType="generalAction"
+                    label="Generate zod"
+                    tooltip="Generate a zod schema"
+                    style="normal"
+                    icon="icons/zod.png"
+                    ribbonPath="cc.glaciyan.vpzod.menu1/#">
+                <actionController class="cc.glaciyan.vpzod.actions.GenerateZodSchema"/>
+            </action>
+        </actionSet>
+    </actionSets>
+</plugin>
