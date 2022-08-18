@@ -14,6 +14,7 @@ public class ClassModel {
   public ClassModel extending;
   public Collection<ClassModelRelation> usages = new ArrayList<>();
   public Collection<ClassModelRelation> using = new ArrayList<>();
+  public Collection<Attribute> attributes = new ArrayList<>();
 
   @SuppressWarnings("rawtypes")
   private ClassModel(IClass vbClass) {
@@ -54,8 +55,18 @@ public class ClassModel {
       String type = attribute.getTypeAsString();
       String typeModifier = attribute.getTypeModifier();
       // TODO description as doc comment
+
+      attributes.add(new Attribute(name, multiplicity, visibility, type, typeModifier));
     }
-    // TODO also get attribute from associations
+
+    using.stream().filter(modelRelation -> modelRelation.isEnd).forEach(modelRelation -> {
+      if (modelRelation.relationship instanceof IAssociation) {
+        IAssociationEnd relation = (IAssociationEnd)((IAssociation)modelRelation.relationship).getToEnd();
+
+        attributes.add(
+          new Attribute(relation.getName(), MultiplicityUtils.getMultiplicity(relation.getMultiplicity()), VisibilityUtils.getVisibility(relation.getVisibility()), modelRelation.model));
+      }
+    });
   }
 
   @SuppressWarnings("rawtypes")

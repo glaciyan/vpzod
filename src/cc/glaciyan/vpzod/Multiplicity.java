@@ -3,9 +3,9 @@ package cc.glaciyan.vpzod;
 public enum Multiplicity {
   Unspecified,
   None,
-  NoneOrOne,
+  NoneToOne,
   //NoneOrMany, // Many fulfils the same purpose
   One,
-  OneOrMany,
+  OneToMany,
   Many
 }

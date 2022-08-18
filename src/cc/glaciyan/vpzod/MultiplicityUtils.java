@@ -1,23 +1,26 @@
 package cc.glaciyan.vpzod;
 
+import com.vp.plugin.model.IAttribute;
+
 public class MultiplicityUtils {
   private MultiplicityUtils() {
     throw new AssertionError("No MultiplicityUtils for you!");
   }
 
   public static Multiplicity getMultiplicity(String multiplicity) {
+
     switch (multiplicity) {
-      case "0":
+      case IAttribute.MULTIPLICITY_ZERO:
         return Multiplicity.None;
-      case "0..1":
-        return Multiplicity.NoneOrOne;
-      case "0..*":
-      case "*":
+      case IAttribute.MULTIPLICITY_ZERO_TO_ONE:
+        return Multiplicity.NoneToOne;
+      case IAttribute.MULTIPLICITY_ZERO_TO_MANY:
+      case IAttribute.MULTIPLICITY_MANY:
         return Multiplicity.Many;
-      case "1":
+      case IAttribute.MULTIPLICITY_ONE:
         return Multiplicity.One;
-      case "1..*":
-        return Multiplicity.OneOrMany;
+      case IAttribute.MULTIPLICITY_ONE_TO_MANY:
+        return Multiplicity.OneToMany;
       default:
         return Multiplicity.Unspecified;
     }

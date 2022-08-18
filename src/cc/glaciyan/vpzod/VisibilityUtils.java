@@ -1,5 +1,7 @@
 package cc.glaciyan.vpzod;
 
+import com.vp.plugin.model.IAttribute;
+
 public class VisibilityUtils {
   private VisibilityUtils() {
     throw new AssertionError("No VisibilityUtils for you!");
@@ -7,13 +9,13 @@ public class VisibilityUtils {
 
   public static Visibility getVisibility(String visibility) {
     switch (visibility) {
-      case "private":
+      case IAttribute.VISIBILITY_PRIVATE:
         return Visibility.Private;
-      case "protected":
+      case IAttribute.VISIBILITY_PROTECTED:
         return Visibility.Protected;
-      case "package":
+      case IAttribute.VISIBILITY_PACKAGE:
         return Visibility.Package;
-      case "public":
+      case IAttribute.VISIBILITY_PUBLIC:
         return Visibility.Public;
       default:
         return Visibility.Unspecified;
