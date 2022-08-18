@@ -14,12 +14,13 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class ZodGenerator {
   private ZodGenerator() {}
 
-  public static void generateZodSchema(File output) {
+  public static void generateZodSchema(File output) throws Exception {
     try {
       ApplicationManager applicationManager = ApplicationManager.instance();
       ProjectManager projectManager = applicationManager.getProjectManager();
@@ -57,8 +58,9 @@ public class ZodGenerator {
     sortedClasses.add(classModel);
   }
 
-  private static void writeTemplate(ApplicationManager applicationManager, Collection<ClassModel> sortedClasses, File file) {
-    try {
+  private static void writeTemplate(ApplicationManager applicationManager, Collection<ClassModel> sortedClasses, File file)
+    throws Exception {
+    //try {
       String pluginPath = applicationManager.getPluginInfo("cc.glaciyan.vpzod").getPluginDir().getAbsolutePath();
 
       Properties velocityProperties = new Properties();
@@ -76,22 +78,22 @@ public class ZodGenerator {
       Velocity.evaluate(context, writer, "zod", reader);
       reader.close();
       writer.close();
-    }
-    catch (ResourceNotFoundException rnfe) {
-      // couldn't find the template
-      System.err.println("couldn't find the template: " + rnfe.getMessage());
-    }
-    catch (ParseErrorException pe) {
-      // syntax error: problem parsing the template
-      System.err.println("syntax error: problem parsing the template: " + pe.getMessage());
-    }
-    catch (MethodInvocationException mie) {
-      // something invoked in the template
-      // threw an exception
-      System.err.println("Method invocation exception: " + mie.getMessage());
-    }
-    catch (Exception e) {
-      System.err.println("Unknown error: " + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
-    }
+    //}
+    //catch (ResourceNotFoundException rnfe) {
+    //  // couldn't find the template
+    //  System.err.println("couldn't find the template: " + rnfe.getMessage());
+    //}
+    //catch (ParseErrorException pe) {
+    //  // syntax error: problem parsing the template
+    //  System.err.println("syntax error: problem parsing the template: " + pe.getMessage());
+    //}
+    //catch (MethodInvocationException mie) {
+    //  // something invoked in the template
+    //  // threw an exception
+    //  System.err.println("Method invocation exception: " + mie.getMessage());
+    //}
+    //catch (Exception e) {
+    //  System.err.println("Unknown error: " + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+    //}
   }
 }

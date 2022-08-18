@@ -35,7 +35,7 @@ public class GenerateZodDialog {
           Configurations.getInstance().save();
         }
         catch (Exception err) {
-          JOptionPane.showMessageDialog(contentPanel, "Could not generate schema!", "Error!", JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(contentPanel, "Could not generate schema!\n" + err.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         }
         finally {
           dialog.close();
