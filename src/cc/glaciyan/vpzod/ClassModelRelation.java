@@ -14,4 +14,20 @@ public class ClassModelRelation {
     this.direction = direction;
     this.isEnd = isEnd;
   }
+
+  public ClassModel getModel() {
+    return model;
+  }
+
+  public IRelationship getRelationship() {
+    return relationship;
+  }
+
+  public RelationshipDirection getDirection() {
+    return direction;
+  }
+
+  public boolean isEnd() {
+    return isEnd;
+  }
 }

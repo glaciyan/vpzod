@@ -23,4 +23,50 @@ public class Attribute {
     this.type = complexType.name;
     this.complexType = complexType;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public Multiplicity getMultiplicity() {
+    return multiplicity;
+  }
+
+  public Visibility getVisibility() {
+    return visibility;
+  }
+
+  public String getType() {
+    switch (type) {
+      case "url":
+        return "string().url()";
+      case "email":
+        return "string().email()";
+      case "string":
+      case "String":
+        return "string()";
+      case "date":
+        return "date()";
+      case "number":
+      case "int":
+      case "integer":
+      case "double":
+      case "float":
+        return "number()";
+      case "long":
+        return "bigint()";
+      case "boolean":
+        return "boolean()";
+      default:
+        return type;
+    }
+  }
+
+  public ClassModel getComplexType() {
+    return complexType;
+  }
+
+  public String getTypeModifier() {
+    return typeModifier;
+  }
 }
