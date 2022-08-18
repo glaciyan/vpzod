@@ -5,12 +5,19 @@ import cc.glaciyan.uml.RelationshipDirection;
 import com.vp.plugin.model.IAssociation;
 import com.vp.plugin.model.IAssociationEnd;
 import com.vp.plugin.model.IRelationship;
+import com.vp.plugin.model.IRelationshipEnd;
 
-public class VPClassModelRelation extends ClassModelRelation {
+public class VPClassModelRelation {
+  private VPClassModelRelation() { }
 
-  public VPClassModelRelation(VPClassModel target, IRelationship relationship, RelationshipDirection direction) {
-    super(target, direction, relationship.getModelType(), ((IAssociation)relationship).getToEnd().getName(),
-          MultiplicityUtils.getMultiplicity(((IAssociationEnd)((IAssociation)relationship).getToEnd()).getMultiplicity()),
-          VisibilityUtils.getVisibility(((IAssociationEnd)((IAssociation)relationship).getToEnd()).getVisibility()));
+  public static ClassModelRelation valueOf(VPClassModel target, IRelationship relationship, RelationshipDirection direction) {
+    if (relationship instanceof IAssociation) {
+      IRelationshipEnd relationshipEnd = ((IAssociation)relationship).getToEnd();
+      return new ClassModelRelation(target, direction, relationship.getModelType(), relationshipEnd.getName(),
+                                    MultiplicityUtils.getMultiplicity(((IAssociationEnd)relationshipEnd).getMultiplicity()),
+                                    VisibilityUtils.getVisibility(((IAssociationEnd)relationshipEnd).getVisibility()));
+    } else {
+      return new ClassModelRelation(target, direction, relationship.getModelType(), null, null, null);
+    }
   }
 }

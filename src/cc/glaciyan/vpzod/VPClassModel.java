@@ -78,11 +78,9 @@ public class VPClassModel extends ClassModel {
       Object next = iterator.next();
 
       IRelationship relation;
-      boolean isEnd = false;
       if (next instanceof IRelationshipEnd) {
         IRelationshipEnd lRelationshipEnd = (IRelationshipEnd)next;
         relation = lRelationshipEnd.getEndRelationship();
-        isEnd = true;
       }
       else {
         relation = (IRelationship)next;
@@ -98,13 +96,13 @@ public class VPClassModel extends ClassModel {
         }
 
         if (Classes.containsKey(relatedClass.getName())) {
-          classModelRelations.add(new VPClassModelRelation(
+          classModelRelations.add(VPClassModelRelation.valueOf(
             (VPClassModel)Classes.get(relatedClass.getName()), relation,
             direction));
         }
         else {
           classModelRelations.add(
-            new VPClassModelRelation(process(relatedClass),
+            VPClassModelRelation.valueOf(process(relatedClass),
                                      relation, direction));
         }
       }

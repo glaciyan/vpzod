@@ -61,7 +61,7 @@ public final class VPZodGenerator implements IZodGenerator {
     context.put("classes", sortedClasses);
 
     FileWriter writer = new FileWriter(file);
-    FileReader reader = new FileReader(pluginPath + "/src/cc/glaciyan/vpzod/templates/zod.vm");
+    FileReader reader = new FileReader(pluginPath + "/src/cc/glaciyan/templates/zod.vm");
 
     Velocity.evaluate(context, writer, "zod", reader);
     reader.close();
