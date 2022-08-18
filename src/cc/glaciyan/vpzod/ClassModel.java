@@ -70,7 +70,7 @@ public class ClassModel {
     });
   }
 
-  public static ClassModel valueOf(IClass vbClass) {
+  public static ClassModel process(IClass vbClass) {
     ClassModel cached = Classes.get(vbClass.getName());
     if (cached != null) return cached;
 
@@ -113,7 +113,7 @@ public class ClassModel {
         }
         else {
           classModelRelations.add(
-            new ClassModelRelation(valueOf(relatedClass),
+            new ClassModelRelation(process(relatedClass),
                                    relation, direction, isEnd));
         }
       }

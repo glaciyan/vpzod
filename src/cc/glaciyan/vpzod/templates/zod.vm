@@ -10,15 +10,17 @@
 #macro(modifier $typeMod $multiplicity)
 #array($typeMod $multiplicity)#nullish($multiplicity)
 #end
+#macro(schemaName $name)${name}Schema#end
 
 import { z } from "zod";
 
 #foreach( $cls in $classes )
-export const $cls.name = #if($cls.extending)
-${cls.extending.name}.extend#else
+export const #schemaName($cls.name) = #if($cls.extending)
+#schemaName($cls.extending.name).extend#else
 z.object#end({
 #foreach($attribute in $cls.attributes)
-  $attribute.name:#if($attribute.complexType) ${attribute.type}#else z.${attribute.type}#end#modifier($attribute.typeModifier $attribute.multiplicity),
+  $attribute.name:#if($attribute.complexType) #schemaName($attribute.type)#else z.${attribute.type}#end#modifier($attribute.typeModifier $attribute.multiplicity),
 #end});
+export type $cls.name = z.infer<typeof #schemaName($cls.name)>;
 
 #end

@@ -14,8 +14,11 @@ import org.apache.velocity.exception.MethodInvocationException;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class GenerateZodSchema implements VPActionController {
@@ -24,11 +27,14 @@ public class GenerateZodSchema implements VPActionController {
     try {
       ApplicationManager applicationManager = ApplicationManager.instance();
       ProjectManager projectManager = applicationManager.getProjectManager();
+
+      String pluginPath = applicationManager.getPluginInfo("cc.glaciyan.vpzod").getPluginDir().getAbsolutePath();
+
       IModelElement[] models = projectManager.getProject().toModelElementArray(IModelElementFactory.MODEL_TYPE_CLASS);
 
       for (IModelElement model : models) {
         IClass vbClass = (IClass)model;
-        ClassModel.valueOf(vbClass);
+        ClassModel.process(vbClass);
       }
 
       Collection<ClassModel> sortedClasses = new Vector<>();
@@ -36,12 +42,17 @@ public class GenerateZodSchema implements VPActionController {
         addToSorted(sortedClasses, classModel);
       });
 
-      writeTemplate(applicationManager, sortedClasses);
+      writeTemplate(applicationManager, sortedClasses, new File("C:\\dev\\pixoid\\pixiv\\schema\\schema.ts"));
     }
     finally {
       // clean up
       ClassModel.Classes = new HashMap<>();
     }
+  }
+
+  @Override
+  public void update(VPAction vpAction) {
+
   }
 
   private static void addToSorted(Collection<ClassModel> sortedClasses, ClassModel classModel) {
@@ -57,12 +68,7 @@ public class GenerateZodSchema implements VPActionController {
     sortedClasses.add(classModel);
   }
 
-  @Override
-  public void update(VPAction vpAction) {
-
-  }
-
-  private static void writeTemplate(ApplicationManager applicationManager, Collection<ClassModel> sortedClasses) {
+  private static void writeTemplate(ApplicationManager applicationManager, Collection<ClassModel> sortedClasses, File file) {
     try {
       String pluginPath = applicationManager.getPluginInfo("cc.glaciyan.vpzod").getPluginDir().getAbsolutePath();
 
@@ -75,7 +81,7 @@ public class GenerateZodSchema implements VPActionController {
 
       context.put("classes", sortedClasses);
 
-      FileWriter writer = new FileWriter("C:\\Users\\kevin\\Downloads\\Schema.ts");
+      FileWriter writer = new FileWriter(file);
       FileReader reader = new FileReader(pluginPath + "/src/cc/glaciyan/vpzod/templates/zod.vm");
 
       Velocity.evaluate(context, writer, "zod", reader);
