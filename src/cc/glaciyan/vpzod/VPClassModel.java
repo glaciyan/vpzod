@@ -1,49 +1,44 @@
 package cc.glaciyan.vpzod;
 
+import cc.glaciyan.uml.*;
 import com.vp.plugin.model.*;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
 
-import static cc.glaciyan.vpzod.RelationshipDirection.From;
-import static cc.glaciyan.vpzod.RelationshipDirection.To;
+import static cc.glaciyan.uml.RelationshipDirection.From;
+import static cc.glaciyan.uml.RelationshipDirection.To;
 
-public class ClassModel {
-  public static Map<String, ClassModel> Classes = new HashMap<>();
+public class VPClassModel extends ClassModel {
 
-  public String name;
-  public ClassModel extending;
-  public Collection<ClassModelRelation> usages = new ArrayList<>();
-  public Collection<ClassModelRelation> using = new ArrayList<>();
-  public Collection<Attribute> attributes = new ArrayList<>();
+  //private final Collection<VPClassModelRelation> usages = new ArrayList<>();
 
   @SuppressWarnings("rawtypes")
-  private ClassModel(IClass vbClass) {
-    this.name = vbClass.getName();
+  private VPClassModel(IClass vbClass) {
+    super(vbClass.getName());
     if (Classes.containsKey(this.name)) throw new IllegalArgumentException(String.format("%s is already constructed", this.name));
     Classes.put(this.name, this);
 
-    //region Handle all the relations
-    Iterator simpleFrom = vbClass.fromRelationshipIterator();
-    buildRelations(vbClass, simpleFrom, usages, To);
+    ////region Handle all the relations
+    //Iterator simpleFrom = vbClass.fromRelationshipIterator();
+    //buildRelations(vbClass, simpleFrom, usages, To);
 
     Iterator simpleTo = vbClass.toRelationshipIterator();
     buildRelations(vbClass, simpleTo, using, From);
 
-    // Flipped "using" and "usages" because of how End relations are
-    // handled (I think, it just works)
     Iterator fromEnds = vbClass.fromRelationshipEndIterator();
     buildRelations(vbClass, fromEnds, using, To);
 
-    Iterator toEnds = vbClass.toRelationshipEndIterator();
-    buildRelations(vbClass, toEnds, usages, From);
+    //Iterator toEnds = vbClass.toRelationshipEndIterator();
+    //buildRelations(vbClass, toEnds, usages, From);
     //endregion
 
     //region Set the superclass if present
     using.stream()
-      .filter(classModelRelation -> classModelRelation.relationship.getModelType()
+      .filter(classModelRelation -> classModelRelation.type
         .equals("Generalization"))
       .findFirst()
-      .ifPresent(superClass -> this.extending = superClass.model);
+      .ifPresent(superClass -> this.extending = superClass.target);
     //endregion
 
     Iterator attributeIterator = vbClass.attributeIterator();
@@ -60,21 +55,17 @@ public class ClassModel {
       attributes.add(new Attribute(name, multiplicity, visibility, type, typeModifier));
     }
 
-    using.stream().filter(modelRelation -> modelRelation.isEnd).forEach(modelRelation -> {
-      if (modelRelation.relationship instanceof IAssociation) {
-        IAssociationEnd relation = (IAssociationEnd)((IAssociation)modelRelation.relationship).getToEnd();
-
-        attributes.add(
-          new Attribute(relation.getName(), MultiplicityUtils.getMultiplicity(relation.getMultiplicity()), VisibilityUtils.getVisibility(relation.getVisibility()), modelRelation.model));
-      }
+    using.stream().filter(ClassModelRelation::canBeAttribute).forEach(modelRelation -> {
+      attributes.add(modelRelation.endAttribute());
     });
   }
 
-  public static ClassModel process(IClass vbClass) {
-    ClassModel cached = Classes.get(vbClass.getName());
+
+  public static VPClassModel process(IClass vbClass) {
+    VPClassModel cached = (VPClassModel)Classes.get(vbClass.getName());
     if (cached != null) return cached;
 
-    return new ClassModel(vbClass);
+    return new VPClassModel(vbClass);
   }
 
   @SuppressWarnings("rawtypes")
@@ -107,36 +98,16 @@ public class ClassModel {
         }
 
         if (Classes.containsKey(relatedClass.getName())) {
-          classModelRelations.add(new ClassModelRelation(
-            Classes.get(relatedClass.getName()), relation,
-            direction, isEnd));
+          classModelRelations.add(new VPClassModelRelation(
+            (VPClassModel)Classes.get(relatedClass.getName()), relation,
+            direction));
         }
         else {
           classModelRelations.add(
-            new ClassModelRelation(process(relatedClass),
-                                   relation, direction, isEnd));
+            new VPClassModelRelation(process(relatedClass),
+                                     relation, direction));
         }
       }
     }
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public ClassModel getExtending() {
-    return extending;
-  }
-
-  public Collection<ClassModelRelation> getUsages() {
-    return usages;
-  }
-
-  public Collection<ClassModelRelation> getUsing() {
-    return using;
-  }
-
-  public Collection<Attribute> getAttributes() {
-    return attributes;
   }
 }

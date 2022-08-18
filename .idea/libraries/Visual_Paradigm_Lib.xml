@@ -13,8 +13,11 @@
       <root url="jar://$PROJECT_DIR$/../../Program Files/Visual Paradigm 16.3/lib/jniwrap.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../Program Files/Visual Paradigm 16.3/lib/winpack.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../Program Files/Visual Paradigm 16.3/lib/vpplatform.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Program Files/Visual Paradigm 16.3/ormlib/orm.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/../lib/docs/vp-plugin-javadoc" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/../../Program Files/Visual Paradigm 16.3/lib/lib02.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../Program Files/Visual Paradigm 16.3/lib/lib05.jar!/" />

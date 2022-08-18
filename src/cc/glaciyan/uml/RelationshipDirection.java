@@ -1,4 +1,4 @@
-package cc.glaciyan.vpzod;
+package cc.glaciyan.uml;
 
 public enum RelationshipDirection {
   From,

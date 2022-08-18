@@ -1,4 +1,4 @@
-package cc.glaciyan.vpzod;
+package cc.glaciyan.uml;
 
 public class Attribute {
   public String name;
@@ -20,7 +20,7 @@ public class Attribute {
     this.name = name;
     this.multiplicity = multiplicity;
     this.visibility = visibility;
-    this.type = complexType.name;
+    this.type = complexType.getName();
     this.complexType = complexType;
   }
 

@@ -1,5 +1,6 @@
 package cc.glaciyan.vpzod;
 
+import cc.glaciyan.uml.Multiplicity;
 import com.vp.plugin.model.IAttribute;
 
 public class MultiplicityUtils {

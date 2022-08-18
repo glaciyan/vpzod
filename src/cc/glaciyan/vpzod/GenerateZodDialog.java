@@ -29,7 +29,8 @@ public class GenerateZodDialog {
         if (isFileInvalid(file)) return;
 
         try {
-          ZodGenerator.generateZodSchema(file);
+          VPZodGenerator vpZodGenerator = new VPZodGenerator(file);
+          vpZodGenerator.generateZodSchema();
 
           Configurations.getInstance().getProjectConfigurations().setSchemaPath(pathTextField.getText());
           Configurations.getInstance().save();
