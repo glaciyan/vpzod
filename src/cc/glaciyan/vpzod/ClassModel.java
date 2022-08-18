@@ -19,6 +19,7 @@ public class ClassModel {
   @SuppressWarnings("rawtypes")
   private ClassModel(IClass vbClass) {
     this.name = vbClass.getName();
+    if (Classes.containsKey(this.name)) throw new IllegalArgumentException(String.format("%s is already constructed", this.name));
     Classes.put(this.name, this);
 
     //region Handle all the relations
@@ -69,6 +70,13 @@ public class ClassModel {
     });
   }
 
+  public static ClassModel valueOf(IClass vbClass) {
+    ClassModel cached = Classes.get(vbClass.getName());
+    if (cached != null) return cached;
+
+    return new ClassModel(vbClass);
+  }
+
   @SuppressWarnings("rawtypes")
   private static void buildRelations(IClass root,
                                      Iterator iterator,
@@ -112,7 +120,23 @@ public class ClassModel {
     }
   }
 
-  public static ClassModel valueOf(IClass vbClass) {
-    return new ClassModel(vbClass);
+  public String getName() {
+    return name;
+  }
+
+  public ClassModel getExtending() {
+    return extending;
+  }
+
+  public Collection<ClassModelRelation> getUsages() {
+    return usages;
+  }
+
+  public Collection<ClassModelRelation> getUsing() {
+    return using;
+  }
+
+  public Collection<Attribute> getAttributes() {
+    return attributes;
   }
 }
