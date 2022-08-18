@@ -19,7 +19,7 @@ import java.util.*;
 public class ZodGenerator {
   private ZodGenerator() {}
 
-  public static void generatedZodSchema(File output) {
+  public static void generateZodSchema(File output) {
     try {
       ApplicationManager applicationManager = ApplicationManager.instance();
       ProjectManager projectManager = applicationManager.getProjectManager();
