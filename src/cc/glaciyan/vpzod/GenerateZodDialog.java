@@ -70,6 +70,11 @@ public class GenerateZodDialog {
         File selectedFile = fileChooser.getSelectedFile();
         if (selectedFile == null) return;
 
+
+        if (!selectedFile.getAbsolutePath().endsWith(".ts") && !selectedFile.getAbsolutePath().matches("\\.(\\d+)$")) {
+          selectedFile = new File(selectedFile.getAbsolutePath() + ".ts");
+        }
+
         if (isFileInvalid(selectedFile)) return;
 
         pathTextField.setText(selectedFile.getAbsolutePath());
